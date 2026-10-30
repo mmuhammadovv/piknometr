@@ -53,6 +53,7 @@ button.ghost{background:transparent;color:var(--accent)}
 button:disabled{opacity:.4;cursor:not-allowed}
 button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .row{display:flex;flex-wrap:wrap;gap:8px}
+.mrow{align-items:end}.mi{flex:1 1 160px}
 .inputs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 @media (max-width:560px){.inputs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .formula{font-family:var(--f-mono);font-size:14px;background:var(--bg);border-radius:8px;padding:12px;overflow-x:auto;white-space:nowrap}
@@ -85,7 +86,7 @@ tr.cur td{background:var(--hi);color:var(--accent);font-weight:600}
   <header>
     <div class="eyebrow">Virtual laboratoriya ishi</div>
     <h1>Qattiq jism zichligini piknometr yordamida aniqlash</h1>
-    <p>Jismni tanlang, haroratni o'rnating va tarozida uchta tortishni bajaring. Dastur σ va λ ni jadvaldan oladi, (3) formula bo'yicha ρ ni hisoblaydi va natijani 2-jadvalga yozadi. Haqiqiy laboratoriyada olgan qiymatlaringizni ham qo'lda kiritishingiz mumkin.</p>
+    <p>Jismni tanlang, haroratni o'rnating va tarozida uchta tortishni bajaring. Dastur σ va λ ni jadvaldan oladi, (3) formula bo'yicha ρ ni hisoblaydi va natijani 2-jadvalga yozadi. Jism, suvli piknometr va jismli piknometr massalarini o'zingiz ham kiritishingiz mumkin.</p>
   </header>
 
   <div class="grid">
@@ -140,9 +141,9 @@ tr.cur td{background:var(--hi);color:var(--accent);font-weight:600}
     <section class="panel" aria-label="Ish tartibi">
       <h2>Ish tartibi</h2>
       <div class="steps">
-        <div class="step" id="st1"><div class="n">1</div><div><p>Qattiq jismning massasini (m) tarozida tortib oling.</p><div class="row"><button id="b1">Jismni tortish</button></div><div class="val" id="v1"></div></div></div>
-        <div class="step" id="st2"><div class="n">2</div><div><p>Piknometrga toza suv quyib, suv bilan piknometrning birgalikdagi massasini (M) tortib oling.</p><div class="row"><button id="b2">Suv quyib tortish</button></div><div class="val" id="v2"></div></div></div>
-        <div class="step" id="st3"><div class="n">3</div><div><p>Jismni piknometrga soling, siqib chiqarilgan suvni artib, piknometr + suv + jism massasini (M<sub>0</sub>) tortib oling.</p><div class="row"><button id="b3">Jismni solib tortish</button></div><div class="val" id="v3"></div></div></div>
+        <div class="step" id="st1"><div class="n">1</div><div><p>Qattiq jismning massasini (m) tarozida tortib oling.</p><div class="row mrow"><button id="b1">Tarozida tortish</button><label class="mi" for="inMj">m, g (o'zingiz kiriting)<input type="number" id="inMj" step="0.0001" min="0" inputmode="decimal" placeholder="masalan 12.3456"></label></div><div class="val" id="v1"></div></div></div>
+        <div class="step" id="st2"><div class="n">2</div><div><p>Piknometrga toza suv quyib, suv bilan piknometrning birgalikdagi massasini (M) tortib oling.</p><div class="row mrow"><button id="b2">Tarozida tortish</button><label class="mi" for="inMs">M, g (o'zingiz kiriting)<input type="number" id="inMs" step="0.0001" min="0" inputmode="decimal" placeholder="masalan 12.3456"></label></div><div class="val" id="v2"></div></div></div>
+        <div class="step" id="st3"><div class="n">3</div><div><p>Jismni piknometrga soling, siqib chiqarilgan suvni artib, piknometr + suv + jism massasini (M<sub>0</sub>) tortib oling.</p><div class="row mrow"><button id="b3">Tarozida tortish</button><label class="mi" for="inMjs">M<sub>0</sub>, g (o'zingiz kiriting)<input type="number" id="inMjs" step="0.0001" min="0" inputmode="decimal" placeholder="masalan 12.3456"></label></div><div class="val" id="v3"></div></div></div>
         <div class="step" id="st4"><div class="n">4</div><div><p>σ va λ ning berilgan haroratdagi qiymatlarini jadvaldan oling.</p><div class="val" id="v4"></div></div></div>
         <div class="step" id="st5"><div class="n">5</div><div><p>Qiymatlarni (3) formulaga qo'yib ρ ni aniqlang.</p><div class="val" id="v5"></div></div></div>
         <div class="step" id="st6"><div class="n">6</div><div><p>Natijani 2-jadvalga joylashtiring. Aniqroq natija uchun tajribani kamida 3 marta takrorlang.</p><div class="row"><button id="b6">2-jadvalga yozish</button><button class="ghost" id="bNew">Yangi tajriba</button></div></div></div>
@@ -152,13 +153,7 @@ tr.cur td{background:var(--hi);color:var(--accent);font-weight:600}
 
   <section class="panel" aria-label="Hisoblash">
     <h2>Hisoblash</h2>
-    <div class="inputs">
-      <label for="im">m, g<input type="number" id="im" step="0.0001" inputmode="decimal"></label>
-      <label for="iM">M, g<input type="number" id="iM" step="0.0001" inputmode="decimal"></label>
-      <label for="iM0">M<sub>0</sub>, g<input type="number" id="iM0" step="0.0001" inputmode="decimal"></label>
-      <label for="it">t, °C<input type="number" id="it" step="1" min="15" max="30"></label>
-    </div>
-    <p class="note">Tarozi ko'rsatkichlari avtomatik yoziladi. O'z o'lchovlaringizni kiritsangiz, hisob darhol yangilanadi.</p>
+    <p class="note" style="margin-top:0">m, M, M<sub>0</sub> qiymatlarini «Ish tartibi» bo'limida tarozidan oling yoki o'zingiz yozing. Harorat qurilma panelidagi sudrag'ichdan olinadi.</p>
     <div class="formula" id="formula" style="margin-top:10px"></div>
     <div class="res" id="res"></div>
   </section>
@@ -229,8 +224,7 @@ function newTrial(){
   const mass=(0.004+Math.random()*0.008); // 4..12 g haqiqiy massa
   const Vs=mass/rho;
   st={stage:0,trial:{rho,Vs,P:0.0185+Math.random()*0.003,Vp:25e-6},m:null,M:null,M0:null};
-  ["im","iM","iM0"].forEach(i=>$(i).value="");
-  $("it").value=T();
+  ["inMj","inMs","inMjs"].forEach(i=>$(i).value="");
   render();
 }
 function reading(which){
@@ -259,7 +253,7 @@ function scene(){
   const lcd = s===1? st.m : s===2? st.M : s>=3? st.M0 : 0;
   $("lcd").textContent=(lcd*1000).toFixed(4)+" g";
   const notes=["Tarozi bo'sh. 1-bosqichdan boshlang.","Jism tarozida. Ko'rsatkich m sifatida yozildi.","Suvli piknometr tarozida. Ko'rsatkich M sifatida yozildi.","Jism piknometr ichida, ortiqcha suv artildi. Ko'rsatkich M₀ sifatida yozildi."];
-  $("sceneNote").textContent=notes[Math.min(s,3)];
+  $("sceneNote").textContent=st.manual?"Tarozi siz kiritgan qiymatni ko'rsatmoqda.":notes[Math.min(s,3)];
 }
 function drip(){
   const d=$("dripG"); d.setAttribute("transform",`translate(210,${PAN-100})`);
@@ -270,8 +264,8 @@ function drip(){
 /* hisob */
 const fmt=(x,d)=>Number.isFinite(x)?x.toFixed(d):"—";
 function calc(){
-  const m=parseFloat($("im").value)/1000, M=parseFloat($("iM").value)/1000, M0=parseFloat($("iM0").value)/1000;
-  let t=Math.round(parseFloat($("it").value)); if(!(t in SIGMA)) t=null;
+  const m=parseFloat($("inMj").value)/1000, M=parseFloat($("inMs").value)/1000, M0=parseFloat($("inMjs").value)/1000;
+  let t=T(); if(!(t in SIGMA)) t=null;
   const s=t?SIGMA[t]:NaN, l=t?LAMBDA[t]:NaN;
   const den=M+m-M0;
   const rho = den>0 ? m*(s-l)/den + l : NaN;
@@ -284,7 +278,7 @@ function renderCalc(){
    `<div class="sub">ρ = ${fmt(c.m*(c.s-c.l),6)} / ${fmt(c.den,7)} + ${fmt(c.l,3)}</div>`;
   let h=`<span>ρ = <b>${fmt(c.rho,1)}</b> kg/m³</span>`;
   const ref=mat().rho;
-  if(Number.isFinite(c.rho) && ref && st.trial){
+  if(Number.isFinite(c.rho) && ref && st.trial && !st.manual){
     const e=Math.abs(c.rho-ref)/ref*100;
     h+=`<span>jadvalda: ${ref} kg/m³ <span class="chip ${e<1?"ok":"warn"}">farq ${e.toFixed(2)}%</span></span>`;
   }
@@ -308,7 +302,7 @@ function render(){
   scene(); renderCalc(); renderRef();
 }
 function renderRef(){
-  const t=Math.round(parseFloat($("it").value));
+  const t=T();
   $("ref").innerHTML=Object.keys(SIGMA).map(k=>`<tr class="${+k===t?"cur":""}"><td>${k}</td><td>${SIGMA[k].toFixed(2)}</td><td>${LAMBDA[k].toFixed(3)}</td></tr>`).join("");
 }
 function renderTable(){
@@ -324,16 +318,20 @@ function renderTable(){
 }
 
 /* hodisalar */
-$("b1").onclick=()=>{st.m=reading("m");st.stage=1;$("im").value=(st.m*1000).toFixed(4);render()};
-$("b2").onclick=()=>{st.M=reading("M");st.stage=2;$("iM").value=(st.M*1000).toFixed(4);render()};
-$("b3").onclick=()=>{st.M0=reading("M0");st.stage=3;$("iM0").value=(st.M0*1000).toFixed(4);render();setTimeout(drip,500)};
+$("b1").onclick=()=>{st.m=reading("m");st.stage=1;$("inMj").value=(st.m*1000).toFixed(4);render()};
+$("b2").onclick=()=>{st.M=reading("M");st.stage=2;$("inMs").value=(st.M*1000).toFixed(4);render()};
+$("b3").onclick=()=>{st.M0=reading("M0");st.stage=3;$("inMjs").value=(st.M0*1000).toFixed(4);render();setTimeout(drip,500)};
 $("bNew").onclick=newTrial;
 sel.onchange=()=>{drawSample();newTrial()};
-$("temp").oninput=()=>{$("tlabel").textContent=T()+" °C";newTrial()};
-["im","iM","iM0","it"].forEach(i=>$(i).addEventListener("input",()=>{render()}));
+$("temp").oninput=()=>{$("tlabel").textContent=T()+" °C";render()};
+[["inMj","m",1],["inMs","M",2],["inMjs","M0",3]].forEach(([i,k,n])=>$(i).addEventListener("input",()=>{
+  const v=parseFloat($(i).value);
+  if(Number.isFinite(v)&&v>0){st[k]=v/1000;st.stage=n}else{st[k]=null;st.stage=n-1}
+  st.manual=true; render();
+}));
 $("b6").onclick=()=>{
   const c=calc(); if(!Number.isFinite(c.rho))return;
-  rows.push({m:c.m,M:c.M,M0:c.M0,s:c.s,l:c.l,rho:c.rho,ref:mat().rho||null});
+  rows.push({m:c.m,M:c.M,M0:c.M0,s:c.s,l:c.l,rho:c.rho,ref:st.manual?null:(mat().rho||null)});
   save(); renderTable(); $("toast").textContent=`${rows.length}-tajriba jadvalga yozildi.`;
   newTrial();
 };
